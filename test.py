@@ -1,4 +1,3 @@
-from re import X
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize
@@ -19,9 +18,10 @@ filtered_list = [
 #for word in words_in_quote:
 #    if word.casefold() not in stop_words:
 #        filtered_list.append(word)
-def printlist(list):
-    print(list)
 
+def printlist(list):
+    for element in list:
+        print (element)
 
 #printlist(filtered_list)
 
@@ -35,4 +35,21 @@ words = word_tokenize(string_for_stemming)
 
 stemmed_words = [stemmer.stem(word) for word in words]
 
-printlist(stemmed_words)
+#printlist(stemmed_words)
+
+
+sagan_quote = """
+If you wish to make an apple pie from scratch
+you must first invent the universe."""
+
+sagan_quote_words = word_tokenize(sagan_quote)
+
+#printlist(nltk.pos_tag(sagan_quote_words))
+
+jabberwocky_excerpt= """"
+'T was brillig, and the slithy toves did gyre and gimble in the wabe:
+all mimsy were the borogoves, and the mome raths outgrabe."""
+
+jabberwocky_excerpt_words = word_tokenize(jabberwocky_excerpt)
+
+printlist(nltk.pos_tag(jabberwocky_excerpt_words))
