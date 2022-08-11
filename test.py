@@ -3,6 +3,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.stem import PorterStemmer
 from porter2stemmer import Porter2Stemmer
+from nltk.stem import WordNetLemmatizer
 
 worf_quote = "Sir, I protest. I am not a merry man!"
 
@@ -52,4 +53,19 @@ all mimsy were the borogoves, and the mome raths outgrabe."""
 
 jabberwocky_excerpt_words = word_tokenize(jabberwocky_excerpt)
 
-printlist(nltk.pos_tag(jabberwocky_excerpt_words))
+#printlist(nltk.pos_tag(jabberwocky_excerpt_words))
+
+lemmatizer = WordNetLemmatizer()
+
+string_for_lemmatizing = "The worst friends of DeSoto love scarves"
+
+words_for_lemmatizing = word_tokenize(string_for_lemmatizing);
+
+lemmatized_words = [lemmatizer.lemmatize(word, pos="a") for word in words_for_lemmatizing]
+
+#lemmatized_words = []
+#for word in words_for_lemmatizing:
+#    lemmatized_words.append(lemmatizer.lemmatize(word))
+    
+
+printlist(lemmatized_words)
