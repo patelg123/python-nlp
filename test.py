@@ -4,6 +4,8 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.stem import PorterStemmer
 from porter2stemmer import Porter2Stemmer
 from nltk.stem import WordNetLemmatizer
+import tkinter
+
 
 worf_quote = "Sir, I protest. I am not a merry man!"
 
@@ -68,4 +70,73 @@ lemmatized_words = [lemmatizer.lemmatize(word, pos="a") for word in words_for_le
 #    lemmatized_words.append(lemmatizer.lemmatize(word))
     
 
-printlist(lemmatized_words)
+#printlist(lemmatized_words)
+
+lotr_quote = "It's a dangerous business, Frodo, going out your door."
+
+words_in_lotr_quote =  word_tokenize(lotr_quote);
+
+#printlist(words_in_lotr_quote)
+
+lotr_pos_tags = nltk.pos_tag(words_in_lotr_quote)
+
+#printlist(lotr_pos_tags)
+
+grammar = """
+Chunk: {<.*>+}
+       }<JJ>{"""
+
+chunk_parser = nltk.RegexpParser(grammar)
+
+#tree = chunk_parser.parse(lotr_pos_tags)
+
+tree = nltk.ne_chunk(lotr_pos_tags, binary=True)
+
+#print (tree)
+
+
+quote = """
+Men like Schiaparelli watched the red planet—it is odd, by-the-bye, that
+for countless centuries Mars has been the star of war—but failed to
+interpret the fluctuating appearances of the markings they mapped so well.
+All that time the Martians must have been getting ready.
+
+During the opposition of 1894 a great light was seen on the illuminated
+part of the disk, first at the Lick Observatory, then by Perrotin of Nice,
+and then by other observers. English readers heard of it first in the
+issue of Nature dated August 2."""
+
+def extract_ne(quote):
+    words = word_tokenize(quote, language='english')
+    tags = nltk.pos_tag(words)
+    tree = nltk.ne_chunk(tags, binary=False)
+    
+    tree.draw()
+    
+    #print (tree)
+    results = [];
+    
+    for t in tree:
+        if hasattr(t, "label") and t.label() == "PERSON":
+            for i in t:
+                results.append(i[0]);    
+    
+    
+    return set(results);
+    #return set(
+    #    " ".join(i[0] for i in t)
+    #    for t in tree
+    #    if hasattr(t, "label") and t.label() == "PERSON"
+    #)
+    
+print(extract_ne(quote))
+
+
+
+
+
+
+
+
+
+
